@@ -1,0 +1,116 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+    background-color: darkgrey;
+    /* Replace with your desired darker color */
+    font-family: Arial,
+    sans-serif;
+    font-size: 16px;
+    }
+    /* Increase or decrease as desired */
+    .login-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .login-container h1 {
+        margin-bottom: 30px;
+    }
+
+    .login-form {
+        margin-bottom: 20px;
+    }
+
+    .login-form label {
+        font-size: 16px;
+        display: block;
+        margin-bottom: 5px;
+        text-align: left;
+        color: #000080; 
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"],
+    .login-form input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .login-form input[type="text"] {
+        height: 30px;
+    }
+
+    .login-form input[type="email"] {
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .login-form input[type="submit"] {
+        background-color: #4CAF50;
+        color: black;
+        border: none;
+        cursor: pointer;
+    }
+
+    .forgot-password a {
+        color: red;
+        text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+    h1{
+    font-size: 30px;
+    color: #006400;
+    
+  }
+</style>
+
+<div class="login-container">
+    <h1>Login Page</h1>
+    <hr>
+
+    <div class="login-form">
+        <form method="post" action="/login">
+            {% csrf_token %}
+
+            <div class="form-field">
+                <label for="{{ form.username.id_for_label }}">Enter username:</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.password.id_for_label }}">Enter password:</label>
+                {{ form.password }}
+            </div>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <div class="forgot-password">
+        <a href="/reset_password">Forgot password?</a>
+    </div>
+    <div class="Don't have an account">
+        <a href="/signup">Don't have an account?</a>
+    </div>
+</div>
+
+{% endblock %}

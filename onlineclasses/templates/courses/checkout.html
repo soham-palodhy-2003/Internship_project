@@ -1,0 +1,167 @@
+{% extends 'courses/base.html' %}
+{% load custom_tags %}
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+<style>
+    .card-body {
+        padding: 10px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card-title {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .card {
+        width: 18rem;
+        margin-bottom: 10px;
+        border-radius: 0;
+    }
+
+    .card-text {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        border: none;
+        margin: 0;
+    }
+
+    .card-footer .col {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .card-footer a {
+        display: block;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        border: 1px solid gray;
+    }
+
+    .checkout-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .checkout-details {
+        text-align: center;
+    }
+
+    .checkout-details p {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .checkout-details p.course-title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .checkout-details p.payable-amount {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    .checkout-details p.payable-amount b {
+        font-weight: bold;
+        color: #222;
+    }
+
+    .checkout-details a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 20px;
+        text-decoration: none;
+        border: 1px solid gray;
+        background-color: #f8f9fa;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    .checkout-details a:hover {
+        background-color: #e9ecef;
+    }
+</style>
+<div class="container">
+    <br>
+    <hr>
+    <div class="row checkout-wrapper">
+        <div class="col mx-auto">
+            <div class="card mx-auto" style="width: 35rem;">
+                <img src="https://dz8fbjd9gwp2s.cloudfront.net/courses/63b87ffee4b0b82420c664f3/63b87ffee4b0b82420c664f3_scaled_cover.jpg?v=1"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{course.title}}</h5>
+                    <p class="card-text m-0 p-0">
+                        save {{course.discount}}%
+                        <br>
+                        <span class="price">
+                            <del>{{course.price|rupee}}</del>
+                            &nbsp;
+                            <span>{% cal_sale_price course.price course.discount as amount %} {{amount|rupee}}</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="checkout-details">
+                <p class="display-4 text-center course-title">{{course.title}}</p>
+                <hr>
+                <p class="display-4 text-center payable-amount">Payable Amount: <b>{% cal_sale_price course.price course.discount as amount %} {{amount|rupee}}</b></p>
+                <a class="btn btn-light border" href="?action=create_payment" style="background-color: skyblue; color: #333;">Continue to payment</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% if order is not None%}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "rzp_test_XHFjYcFZZafZcJ", // Enter the Key ID generated from the Dashboard
+        "name": "RKMVCC", //
+        "description": "Payment for {{course.title}}",
+        "image": "https://example.com/your_logo",
+        "order_id": "{{order.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "callback_url": "http://127.0.0.1:8000/verify_payment",
+        "prefill": {
+            "name": "{{user.first_name}}",
+            "email": "{{user.email}}",
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+        rzp1.open();
+</script>
+{% endif %}
+
+{% if error is not None %}
+<script>
+    window.onload=()=>{ 
+        alert("{{error}}")
+    }
+    </script>
+{% endif %}
+
+{% endblock %}

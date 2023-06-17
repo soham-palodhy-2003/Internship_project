@@ -1,0 +1,108 @@
+{% extends 'courses/base.html' %}
+{% load custom_tags %}
+{% block title %}
+Explore Courses
+{% endblock %}
+{% block content %}
+
+<style>
+    .card-body {
+        padding: 10px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card-title {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .card {
+        width: 18rem;
+        margin-bottom: 10px;
+        border-radius: 0;
+    }
+
+    .card-text {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        border: none;
+        margin: 0;
+    }
+
+    .card-footer .col {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .card-footer a {
+        display: block;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        border: 1px solid gray;
+    }
+
+    .btn-enroll-now,
+    .btn-show-more {
+        font-size: 15px;
+        margin-top: 5px;
+    }
+</style>
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        {% for item in courses %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img src="https://dz8fbjd9gwp2s.cloudfront.net/courses/63b87ffee4b0b82420c664f3/63b87ffee4b0b82420c664f3_scaled_cover.jpg?v=1"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{item.title}}</h5>
+                    <p class="card-text m-0 p-0">
+                        save {{item.discount}}%
+                        <br>
+                        <span class="price">
+                            <del>{{item.price|rupee}}</del>
+                            &nbsp;
+                            <span>{% cal_sale_price item.price item.discount as amount %} {{amount|rupee}}</span>
+                        </span>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    {% is_enrolled request item as enrolled %}
+                    <div class="row no-gutters">
+                        {% if enrolled %}
+                        <div class="col d-flex justify-content-center">
+                            <a class="btn btn-block btn-enroll-now" href="/">Start Course</a>
+                        </div>
+                        {% else %}
+                        <div class="col d-flex justify-content-center">
+                            <a class="btn btn-block btn-enroll-now" href="/checkout/{{ item.slug }}">Enroll Now</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col d-flex justify-content-center">
+                            <a class="btn btn-block btn-show-more" href="/courses/{{ item.slug }}">Show More</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}
+course_page
+{% endblock %}
+
+{% block content %}
+<style>
+    .container-fluid {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .display-1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container-fluid">
+    <h1 class="display-1">Selected Course: {{ course.title }}</h1>
+    <h1 class="display-1">Price: {{ course.price }}</h1>
+    <h1 class="display-1">Discount: {{ course.discount }}</h1>
+    <h1 class="display-1">Description: {{ course.description }}</h1>
+</div>
+{% endblock %}

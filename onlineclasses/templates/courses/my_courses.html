@@ -1,0 +1,103 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    h1.display-1 {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    hr {
+        margin-bottom: 30px;
+    }
+
+    .card {
+        width: 30rem;
+        margin-bottom: 20px;
+        border-radius: 0;
+    }
+
+    .card-img-top {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: center;
+        border: none;
+        margin-top: 10px;
+    }
+
+    .card-footer .col {
+        padding: 0;
+        margin: 0;
+    }
+
+    .card-footer a {
+        display: block;
+        padding: 10px 20px;
+        font-size: 18px;
+        text-align: center;
+        text-decoration: none;
+        border: 1px solid gray;
+        background-color: #f8f9fa;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-footer a:hover {
+        background-color: #e9ecef;
+    }
+    .card-deck {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+</style>
+<div class="container">
+    <h1 class="display-1">My Courses</h1>
+    <hr>
+    <div class="row">
+        {% for uc in user_course %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card mx-auto">
+                <img src="https://dz8fbjd9gwp2s.cloudfront.net/courses/63b87ffee4b0b82420c664f3/63b87ffee4b0b82420c664f3_scaled_cover.jpg?v=1"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ uc.course.title }}</h5>
+                </div>
+                <div class="card-footer">
+                    <div class="row no-gutters">
+                        <div class="col d-flex justify-content-center">
+                            <a class="btn btn-block" href="/courses/{{uc.course.slug}}">Start Course</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

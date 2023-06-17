@@ -1,0 +1,138 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}
+Signup
+{% endblock %}
+
+{% block content %}
+
+<style>
+  body {
+    background-color:#0000ff82;
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+  width: 400px;
+  margin: 30px auto;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.container label {
+  color: #000080; /* Replace with your desired label color */
+}
+
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    color: #666;
+    font-size: 18px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 13px;
+  }
+
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 20px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  .existing-user {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .existing-user a {
+    color: #FF0000;
+    text-decoration: none;
+  }
+
+  .existing-user a:hover {
+    text-decoration: underline;
+  }
+
+  .homepage-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+  
+  h1.display-1 {
+    font-size: 30px;
+    color: #006400;
+    
+  }
+</style>
+
+<div class="container">
+  <h1 class="display-1">Signup Page</h1>
+  <div>
+    <form action="/signup" method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_first_name" class="form-label">First Name:</label>
+        {{ form.first_name }}
+      </div>
+      <div class="mb-3">
+        <label for="id_last_name" class="form-label">Last Name:</label>
+        {{ form.last_name }}
+      </div>
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Username:</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-3">
+        <label for="id_email" class="form-label">Email:</label>
+        {{ form.email }}
+      </div>
+      <div class="mb-3">
+        <label for="id_password1" class="form-label">Password:</label>
+        {{ form.password1 }}
+      </div>
+      <div class="mb-3">
+        <label for="id_password2" class="form-label">Confirm Password:</label>
+        {{ form.password2 }}
+      </div>
+      <div class="text-center">
+        <input type="submit" value="Register" class="btn btn-primary">
+      </div>
+    </form>
+    <div class="existing-user">
+      <a href="/login" style="font-size: 18px;">Already have an account? Click here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
